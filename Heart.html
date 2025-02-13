@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+
+        #instruction {
+            position: fixed;
+            top: 20px;
+            left: 55%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            z-index: 10;
+        }
+        
+        #goBackButton {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 10;
+        }
+        .heart {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: red;
+            clip-path: polygon(50% 15%, 100% 35%, 80% 100%, 50% 75%, 20% 100%, 0% 35%);
+            animation: fall linear infinite;
+            cursor: pointer;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            display: none;
+            max-width: 80%;
+        }
+
+        .message-box button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            border: none;
+            background: black;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="instruction">Click every color uwu</div>
+<button id="goBackButton" onclick="window.location.href='https://pissyshu.carrd.co/'">Go Back</button>
+<div id="messageBox" class="message-box">
+    <p id="messageText"></p>
+    <button onclick="closeMessage()">Close</button>
+</div>
+
+<script>
+    const colors = [
+        "red", "blue", "green", "yellow", "pink", "orange", "purple", "cyan", "magenta", "lime",
+        "teal", "brown", "gold", "silver", "coral", "navy", "olive", "maroon", "violet", "turquoise",
+        "lavender", "indigo", "beige", "peach", "crimson", "khaki", "orchid", "plum", "salmon", "slateblue",
+        "chartreuse", "darkred", "hotpink", "firebrick", "chocolate", "deeppink", "darkblue", "mediumvioletred",
+        "lightcoral", "lightseagreen", "peru", "seagreen", "springgreen", "wheat", "sienna", "cadetblue",
+        "steelblue", "tomato", "mediumturquoise", "darkorchid", "forestgreen", "dodgerblue"
+    ];
+
+    const messages = {
+        "red": "I LOVE YOU MWAAAA",
+        "blue": "You're so cool hehe",
+        "green": "Ur such a cutie I love u",
+        "yellow": "ur my favorite part of my day",
+        "pink": "i love your face without makeup",
+        "orange": "you make me laugh sm ugh",
+        "purple": "I will do my best to make you the happiest",
+        "cyan": "You make me feel so at ease",
+        "magenta": "I LOVEEE your laugh🥺",
+        "lime": "ur in my mind 24/7 and I love it",
+        "teal": "Maybe life isn't so bad with you in it",
+        "brown": "I think....I shat my pants...",
+        "gold": "I would give u the world (with 0.2cents in my wallet💔)",
+        "silver": "You're unique, one of a kind and VERY special.",
+        "coral": "I will be here whenever you need me. I'll always be here.",
+        "navy": "For you? I will.",
+        "olive": "You don’t have to worry, you’re safe with me",
+        "maroon": "The best girlfriend I could ever ask for.",
+        "violet": "I would love to wake up next to you and admire your morning face carefully.",
+        "turquoise": "I also want a cute cozy house with two cats and you.",
+        "lavender": "I love your eyes that would always melt my soul when I look into them.",
+        "indigo": "UR MINE!! YEHEHAHAHAHARYEYA AND IM YOURS KYAAAA!!!!",
+        "beige": "Soooo cutee oh yea smile more like that.",
+        "peach": "I'm glad it was you",
+        "crimson": "You're my muse in my passionless artist world",
+        "khaki": "You deserve every good thing in the world.",
+        "orchid": "You're so sweet that I'm afraid I might taint your pure soul",
+        "plum": "Whatcha doing beautiful? *smirk*",
+        "salmon": "We're young, and we have a lot of time. Let's savor every moment, yeah?",
+        "slateblue": "I love hearing about your day",
+        "chartreuse": "I love you more than yesterday",
+        "darkred": "Please plsplspls let it be this girl🙏",
+        "hotpink": "I want to love you carefully",
+        "firebrick": "I admire how amazing you actually are",
+        "chocolate": "Don't die or I WILL cry..😿",
+        "deeppink": "Your voice is my favorite music",
+        "darkblue": "I want to love you the way you want to be loved",
+        "mediumvioletred": "You're my baby and I love you so much💔😿",
+        "lightcoral": "*Farts* oh yeah I just expressed my love. Did u feel it?",
+        "lightseagreen": "You're enough ml",
+        "peru": "Not a single flaw comes to mind when I think of you.",
+        "seagreen": "You're my everything.",
+        "springgreen": "I love you with all my heart",
+        "wheat": "Can I be yours forever?",
+        "sienna": "You make me the happiest",
+        "cadetblue": "I would let you stab me a lil",
+        "steelblue": "I think my eyes forms hearts when I talk with you..",
+        "tomato": "I love you MORE and you cannot win against me [smirk]",
+        "mediumturquoise": "I care about you a lot",
+        "darkorchid": "I hate it when there's somebody bothering my queen🤬",
+        "forestgreen": "Everything feels just right when you're with me.",
+        "dodgerblue": "I look at the sky with a sigh because it could never match your beauty."
+    };
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        heart.style.backgroundColor = randomColor;
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 4 + 4) + "s";  // Slower falling speed
+        heart.onclick = function() { showMessage(randomColor); };
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);  // Hearts stay longer
+    }
+
+    function showMessage(color) {
+        const messageBox = document.getElementById("messageBox");
+        const messageText = document.getElementById("messageText");
+        messageText.innerText = messages[color] || "You are special in every color! ❤️";
+        messageBox.style.display = "block";
+    }
+
+    function closeMessage() {
+        document.getElementById("messageBox").style.display = "none";
+    }
+
+    setInterval(createHeart, 500);  // Slightly slower rate of hearts falling
+</script>
+
+</body>
+</html>
